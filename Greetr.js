@@ -1,5 +1,4 @@
-
-(function(global, $) {
+;(function(global, $) {
 
     // 'new' an object
     var Greetr = function (firstname, lastname, language) {
