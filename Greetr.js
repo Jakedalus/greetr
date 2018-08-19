@@ -1,10 +1,12 @@
 
 (function(global, $) {
 
+    // 'new' an object
     var Greetr = function (firstname, lastname, language) {
         return new Greetr.init(firstname, lastname, language);
     }
 
+    // hidden within the scope of the IIFE and never directly accessible 
     var supportedLangs = ['en', 'es'];
 
     var greetings = {
@@ -60,7 +62,7 @@
 
         log: function() {
             if (console) {
-                console.log(logMessages[this.language] + ': ' + this.fullname);
+                console.log(logMessages[this.language] + ': ' + this.fullname());
             }
 
             return this;
@@ -74,6 +76,20 @@
             return this;
         },
 
+        HTMLGreeting: function(selector, formal) {
+            if (!$) throw 'jQuery not loaded';
+            if (!selector) throw 'Missing jQuery selector';
+
+            var element = $(selector);
+            if (formal) {
+                element.text(this.formalGreeting());
+            } else {
+                element.text(this.greeting());
+            }
+
+            return this;
+        },
+
     };
 
     Greetr.init = function (firstname, lastname, language) {
@@ -83,6 +99,8 @@
         self.firstname = firstname || '';
         self.lastname = lastname || '';
         self.language = language || 'en';
+
+        self.validate();
 
     }
 
